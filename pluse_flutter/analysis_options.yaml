@@ -29,3 +29,8 @@ linter:
 
 formatter:
   trailing_commas: preserve
+analyzer:
+  errors:
+    deprecated_member_use: ignore
+    file_names: ignore
+    unused_element: ignore

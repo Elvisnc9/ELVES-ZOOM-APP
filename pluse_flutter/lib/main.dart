@@ -1,15 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pluse_client/pluse_client.dart';
-import 'package:flutter/material.dart';
+
 import 'package:pluse_flutter/app/appshell.dart';
-import 'package:serverpod_flutter/serverpod_flutter.dart';
-import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
+
 import 'package:the_responsive_builder/the_responsive_builder.dart';
 
-late final Client client;
-
-late String serverUrl;
+// late Client client;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,16 +14,14 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
-  
-  final serverUrl = await getServerUrl();
 
-  client = Client(serverUrl)
-    ..connectivityMonitor = FlutterConnectivityMonitor()
-    ..authSessionManager = FlutterAuthSessionManager();
-
+  // const String serverUrl = 'SERVER_URL';
+  // client = Client(serverUrl)
+  //   ..connectivityMonitor = FlutterConnectivityMonitor()
+  //   ..authSessionManager = FlutterAuthSessionManager();
 
 
- runApp(
+  runApp(
     ProviderScope(
       child: TheResponsiveBuilder(
         builder: (context, orientation, screenType) => const MyApp(),
@@ -35,15 +30,16 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return  MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'VIDEO-CALL APP',
-            home: AppShell(),
-          );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'CHATBOT',
+      home: AppShell(),
+    );
+       
   }
 }
