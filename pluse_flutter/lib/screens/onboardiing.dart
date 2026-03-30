@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pluse_flutter/widgets/circle_Avatar.dart';
-import 'dart:math' as math;
 
 import 'package:the_responsive_builder/the_responsive_builder.dart';
 
@@ -20,9 +18,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   Timer? _autoSlideTimer;
 
-  static const int _totalPages = 4;
   static const Duration _autoSlideDuration = Duration(seconds: 4);
   static const Duration _slideAnimDuration = Duration(milliseconds: 500);
+
+    final pages = [
+      Slider( 
+        title: 'Connect face-to-face anytime!',
+         subtitle: 'Host or join meetings with crystal-clear video, audio, and smooth collaboration.',
+          textspan: 'One Tap Join',
+           ctaText: 'Secure Calls',),
+
+            Slider( 
+        title: 'Connect face-to-face anytime!',
+         subtitle: 'Host or join meetings with crystal-clear video, audio, and smooth collaboration.',
+          textspan: 'One Tap Join',
+           ctaText: 'Secure Calls',),
+              Slider( 
+        title: 'Connect face-to-face anytime!',
+         subtitle: 'Host or join meetings with crystal-clear video, audio, and smooth collaboration.',
+          textspan: 'One Tap Join',
+           ctaText: 'Secure Calls',)
+    ];
 
   @override
   void initState() {
@@ -33,7 +49,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _startAutoSlide() {
     _autoSlideTimer = Timer.periodic(_autoSlideDuration, (_) {
       if (!mounted) return;
-      final nextPage = (_currentPage + 1) % _totalPages;
+      final nextPage = (_currentPage + 1) % pages.length;
       _pageController.animateToPage(
         nextPage,
         duration: _slideAnimDuration,
@@ -57,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _onContinue() {
-    if (_currentPage < _totalPages - 1) {
+    if (_currentPage < pages.length - 1) {
       _pageController.animateToPage(
         _currentPage + 1,
         duration: _slideAnimDuration,
@@ -73,29 +89,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+  
     return  SafeArea(
         child: Column(
           children: [
             // ── Top bar ───────────────────────────────────────
             _TopBar(
               currentPage: _currentPage,
-              totalPages: _totalPages,
+              totalPages: pages.length,
               onSkip: _onSkip,
             ),
 
             // ── Page content ──────────────────────────────────
             Expanded(
-              child: PageView(
+              child: PageView.builder(
                 controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() => _currentPage = index);
-                },
-                children:  [
-                 _animatedScrollers(),
-                 _animatedScrollers(),
-                 _animatedScrollers(),
-                 _animatedScrollers()
-                ],
+                itemCount: pages.length,
+                 itemBuilder: (BuildContext context, int index) { 
+                  return Slider(
+                    title: pages[index].title , 
+                    subtitle: pages[index].subtitle,
+                     textspan: pages[index].textspan,
+                      ctaText: pages[index].ctaText);
+                  },
+                
               ),
             ),
 
@@ -114,87 +132,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       
     );
   }
- Widget _animatedScrollers(){
-return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-       
-    
-        // ── Title ──────────────────────────────────────────────
-         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 28.0),
-          child: Text(
-            'Connect face-to-face anytime!',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.spaceGrotesk(
-              color: Colors.white,
-              fontSize: 40,
-              fontWeight: FontWeight.w900,
-              height: 1.15,
-            ),
-          ),
-        ),
-    
-        const SizedBox(height: 14),
-    
-        // ── Subtitle ───────────────────────────────────────────
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36.0),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: const TextSpan(
-              style: TextStyle(
-                color: Color(0xFFBDBDBD),
-                fontSize: 15,
-                height: 1.5,
-              ),
-              children: [
-                TextSpan(
-                  text: 'Host or join meetings with crystal-clear video, audio, and smooth collaboration.',
-                ),
-                TextSpan(
-                  text: 'One Tap Join',
-                  style: TextStyle(
-                    color: Color(0xFF76FF03),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-    
-        const SizedBox(height: 18),
-    
-        // ── HP Badge ───────────────────────────────────────────
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color:  Color(0xFF76FF03), width: 2),
-          ),
-          child:  Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('⚡', style: TextStyle(fontSize: 16)),
-              SizedBox(width: 6),
-              Text(
-                'Secure Calls',
-                 style: GoogleFonts.spaceGrotesk(
-                color: Colors.white,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w900,
-              ),
-              ),
-            ],
-          ),
-        ),
-    
-      
-      ],
-    );
- }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -283,6 +220,99 @@ class _BottomButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class Slider extends StatelessWidget {
+  const Slider({super.key, required this.title, required this.subtitle, required this.textspan, required this.ctaText});
+
+
+
+final String title;
+final String subtitle;
+final String textspan;
+final String ctaText;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+       
+    
+        // ── Title ──────────────────────────────────────────────
+         Padding(
+          padding: EdgeInsets.symmetric(horizontal: 28.0),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.spaceGrotesk(
+              color: Colors.white,
+              fontSize: 40,
+              fontWeight: FontWeight.w900,
+              height: 1.15,
+            ),
+          ),
+        ),
+    
+        const SizedBox(height: 14),
+    
+        // ── Subtitle ───────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36.0),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: TextStyle(
+                color: Color(0xFFBDBDBD),
+                fontSize: 15,
+                height: 1.5,
+              ),
+              children: [
+                TextSpan(
+                  text: subtitle,
+                ),
+                TextSpan(
+                  text: textspan,
+                  style: TextStyle(
+                    color: Color(0xFF76FF03),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+    
+        const SizedBox(height: 18),
+    
+        // ── HP Badge ───────────────────────────────────────────
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color:  Color(0xFF76FF03), width: 2),
+          ),
+          child:  Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('⚡', style: TextStyle(fontSize: 16)),
+              SizedBox(width: 6),
+              Text(
+                ctaText,
+                 style: GoogleFonts.spaceGrotesk(
+                color: Colors.white,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w900,
+              ),
+              ),
+            ],
+          ),
+        ),
+    
+      
+      ],
     );
   }
 }

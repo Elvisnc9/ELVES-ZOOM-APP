@@ -37,7 +37,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'CHATBOT',
+      title: 'VIDEO CALL APP',
       home: AppShell(),
     );
        

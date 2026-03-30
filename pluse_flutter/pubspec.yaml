@@ -36,7 +36,8 @@ dependencies:
   shared_preferences: 
   http: ^1.6.0
   the_responsive_builder:
-  google_fonts: 
+  google_fonts:
+  lottie: 
 
 dev_dependencies:
   flutter_lints: '>=3.0.0 <7.0.0'
