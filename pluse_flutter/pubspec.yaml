@@ -37,7 +37,8 @@ dependencies:
   http: ^1.6.0
   the_responsive_builder:
   google_fonts:
-  lottie: 
+  lottie:
+  video_player:
 
 dev_dependencies:
   flutter_lints: '>=3.0.0 <7.0.0'
@@ -65,7 +66,7 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
   assets:
     - assets/config.json
-    - assets/
+    - assets/images/
 dependency_overrides:
   flutter_secure_storage: ^10.0.0
 

@@ -33,4 +33,5 @@ analyzer:
   errors:
     deprecated_member_use: ignore
     file_names: ignore
+    non_constant_identifier_names: ignore
     unused_element: ignore
